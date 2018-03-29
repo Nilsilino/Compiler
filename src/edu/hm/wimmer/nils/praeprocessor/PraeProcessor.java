@@ -38,7 +38,7 @@ public class PraeProcessor implements Preprocessor {
 					break;
 				} else if (currentState == State.SLASH_STAR_STAR) {
 					currentState = State.START;
-					combined = "";
+					combined = beforBlock + " ";
 					break;
 				} else if (currentState == State.START){
 					beforBlock = combined;
@@ -59,8 +59,11 @@ public class PraeProcessor implements Preprocessor {
 					currentState = State.SLASH_STAR_STAR;
 					combined = combined + character;
 					break;
-				} else if (currentState != State.START) {
-					currentState = State.SLASH_STAR;
+				} else if (currentState == State.SLASH_STAR_STAR) {
+					currentState = State.SLASH_STAR_STAR;
+					combined = combined + character;
+					break;
+				} else {
 					combined = combined + character;
 					break;
 				}
@@ -97,7 +100,7 @@ public class PraeProcessor implements Preprocessor {
 			default:
 				if (currentState == State.SLASH_SLASH) {
 					break;
-				} else if (currentState == State.SLASH_STAR_STAR) {
+				} else if (currentState == State.SLASH_STAR_STAR || currentState == State.SLASH_STAR) {
 					combined = combined + character;
 					currentState = State.SLASH_STAR;
 					break;
@@ -107,10 +110,13 @@ public class PraeProcessor implements Preprocessor {
 					break;
 				}
 			}
-//			if (currentState != State.START ) {
-//				throw new LexicalError();
-//			}
+			
+
 		}
+		if (currentState == State.SLASH_SLASH || currentState == State.SLASH_STAR || currentState == State.SLASH_STAR_STAR ) {
+			throw new LexicalError();
+		}
+		process.append(combined);
 		return process;
 	}
 
