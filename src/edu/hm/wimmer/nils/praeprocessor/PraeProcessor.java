@@ -7,7 +7,7 @@ import edu.hm.cs.rs.compiler.toys.base.Source;
 public class PraeProcessor implements Preprocessor {
 	
 	
-	private int zeilen = 0;
+	// private int zeilen = 0;
 	
 	enum State {
 		START, SLASH, SLASH_SLASH, SLASH_STAR, SLASH_STAR_STAR, SLASH_STAR_STAR_SLASH,ZEILEN_KOMMENTAR,BLOCK_KOMMENTAR,KEIN_KOMMENTAR
@@ -63,7 +63,7 @@ public class PraeProcessor implements Preprocessor {
 					break;
 				} else if ( currentState == State.SLASH_SLASH) {
 					// Hier fehlt noch Zeilenübersetzung
-					zeilen++;
+					//zeilen++;
 					combined = "\n";
 					process.append(combined);
 					currentState = State.START;
@@ -72,7 +72,7 @@ public class PraeProcessor implements Preprocessor {
 					// Hier fehlt noch Zeilenübersetzung
 					combined = "\n";
 					process.append(combined);
-					zeilen++;
+//					zeilen++;
 					break;
 				}	
 			default:
