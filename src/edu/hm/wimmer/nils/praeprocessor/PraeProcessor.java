@@ -20,6 +20,7 @@ public class PraeProcessor implements Preprocessor {
 	@Override
 	public Source process(Source unprocess) throws LexicalError {
 		// TODO Auto-generated method stub
+		boolean flag = false;
 		State currentState;
 		String combined = "";
 		String beforBlock = "";
@@ -31,57 +32,84 @@ public class PraeProcessor implements Preprocessor {
 			case '/':
 				if (currentState == State.SLASH) {
 					currentState = State.SLASH_SLASH;
-					beforBlock = combined;
 					break;
 				} else if (currentState == State.SLASH_SLASH) {
 					combined = combined + character;
 					break;
 				} else if (currentState == State.SLASH_STAR_STAR) {
 					currentState = State.START;
-					combined = beforBlock + " ";
+					combined = "";
 					break;
-				} else {
+				} else if (currentState == State.START){
 					beforBlock = combined;
 					currentState = State.SLASH;
+					combined = combined + character;
+					break;
+				} else {
+					combined = combined +character;
+					break;
 				}
-				combined = combined + character;
-				break;
+				
 			case '*':
 				if (currentState == State.SLASH) {
 					currentState = State.SLASH_STAR;
+					combined = combined + character;
+					break;
 				} else if (currentState == State.SLASH_STAR) {
 					currentState = State.SLASH_STAR_STAR;
+					combined = combined + character;
+					break;
+				} else if (currentState != State.START) {
+					currentState = State.SLASH_STAR;
+					combined = combined + character;
+					break;
 				}
-				combined = combined + character;
-				break;
+
 			case '\n':
 				if (currentState == State.START) {
-					//System.out.println(combined);
 					combined += character;
+					flag = true;
 					process.append(combined);
 					combined = "";
 					break;
 				} else if ( currentState == State.SLASH_SLASH) {
-					// Hier fehlt noch Zeilenübersetzung
-					//zeilen++;
-					combined = "\n";
+					combined = "";
+					process.append(beforBlock + '\n');
+					beforBlock = "";
+					flag = true;
+					currentState = State.START;
+					break;
+				} else if (currentState == State.SLASH) {
+					combined += character;
 					process.append(combined);
+					combined = "";
 					currentState = State.START;
 					break;
 				} else {
-					// Hier fehlt noch Zeilenübersetzung
-					combined = "\n";
-					process.append(combined);
-//					zeilen++;
+					currentState = State.SLASH_STAR;
+					combined = "";
+					process.append(beforBlock + "\n");
+					beforBlock = "";
+					flag = true;
 					break;
-				}	
-			default:
-				if (currentState == State.SLASH) {
-					currentState = State.START;
 				}
-				combined = combined + character;
+	
+			default:
+				if (currentState == State.SLASH_SLASH) {
+					break;
+				} else if (currentState == State.SLASH_STAR_STAR) {
+					combined = combined + character;
+					currentState = State.SLASH_STAR;
+					break;
+				} else {
+					combined = combined + character;
+					currentState = State.START;
+					break;
+				}
 			}
-			
+//			if (currentState != State.START ) {
+//				throw new LexicalError();
+//			}
 		}
 		return process;
 	}
