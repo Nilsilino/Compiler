@@ -9,14 +9,15 @@ public class PrivaterScanner extends BaseScanner {
 	
 	private static final String letter = "abcdefghijklmnopqrstuvwxyz";
 	private static final String num = "0123456789";	
-	private static final String letterR = "abcdefghijklmnopqstuvwxyz";
-	private static final String letterI = "abcdefghjklmnopqrstuvwxyz";
-	private static final String letterN = "abcdefghijklmopqrstuvwxyz";
-	private static final String letterT = "abcdefghijklmnopqrsuvwxyz";
+	private static final String letterR = "abcdefghijklmnopqstuvwxyz0123456789";
+	private static final String letterI = "abcdefghjklmnopqrstuvwxyz0123456789";
+	private static final String letterN = "abcdefghijklmopqrstuvwxyz0123456789";
+	private static final String letterT = "abcdefghijklmnopqrsuvwxyz0123456789";
 	private static final String letterP = "abcdefghijklmnoqrstuvwxyz";
 	private static final String klammernAuf = "(";
 	private static final String klammernZu = ")";
 	private static final String whitespace = " \n\r\t";
+	private static final String letterNum = "abcdefghijklmnopqrstuvwxyz0123456789";
 	
 	public PrivaterScanner() {
 		// TODO Auto-generated constructor stub
@@ -52,8 +53,8 @@ public class PrivaterScanner extends BaseScanner {
 		transition("init",num, "numeral");
 		transition("numeral",num, "numeral");
 		transition("init",letterP, "identifier");
-		transition("identifier",letter, "identifier");
-		transition("identifier",num, "identifier");
+		transition("identifier",letterNum, "identifier");
+		//transition("identifier",num, "identifier");
 		transition("init",whitespace,"ws");
 		transition("ws",whitespace,"ws");
 		// Longer Paths
@@ -68,7 +69,7 @@ public class PrivaterScanner extends BaseScanner {
 		transition("pr",letterI,"identifier");
 		transition("pri",letterN,"identifier");
 		transition("prin",letterT,"identifier");
-		transition("print",letter+num,"identifier");
+		transition("print",letterNum,"identifier");
 	}
 
 	/*@Override
