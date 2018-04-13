@@ -16,7 +16,7 @@ public class PrivaterScanner extends BaseScanner {
 	private static final String letterP = "abcdefghijklmnoqrstuvwxyz";
 	private static final String klammernAuf = "(";
 	private static final String klammernZu = ")";
-	private static final String whitespace = " \n$\r";
+	private static final String whitespace = " \n\r\t";
 	
 	public PrivaterScanner() {
 		// TODO Auto-generated constructor stub
@@ -54,8 +54,8 @@ public class PrivaterScanner extends BaseScanner {
 		transition("init",letterP, "identifier");
 		transition("identifier",letter, "identifier");
 		transition("identifier",num, "identifier");
-		transition("init",' ',"ws");
-		transition("ws",' ',"ws");
+		transition("init",whitespace,"ws");
+		transition("ws",whitespace,"ws");
 		// Longer Paths
 		transition("init",':', "dp");
 		transition("dp",'=', "assign");
@@ -68,6 +68,7 @@ public class PrivaterScanner extends BaseScanner {
 		transition("pr",letterI,"identifier");
 		transition("pri",letterN,"identifier");
 		transition("prin",letterT,"identifier");
+		transition("print",letter+num,"identifier");
 	}
 
 	/*@Override
