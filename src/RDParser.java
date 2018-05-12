@@ -23,7 +23,7 @@ public class RDParser implements RDParserGenerator {
 	public static void main(final String... args) {
 	    System.out.println(new RDParser().generate(GRAMMAR));
 	}
-	
+
 	public RDParser() {
 		// TODO Auto-generated constructor stub
 	}
@@ -51,40 +51,40 @@ public class RDParser implements RDParserGenerator {
 		for (String nonTerminal : nonTerminalList) {
 			List <String> test = new ArrayList<>();
 			for (String[] gram : grammatik) {
-				if (nonTerminal == gram[0]) {
-				test.add(gram[1]);
+		//		System.out.println(nonTerminal.equals(gram[0]));
+				if (nonTerminal.equals(gram[0])) {
+					test.add(gram[1].substring(0, 1));
 				}
 			}
+		//	System.out.println(test);
 			first.put(nonTerminal, test);
 		}
+		System.out.println(first.entrySet());
 		boolean flag = true;
 		while (flag) {
 			flag = false;
 			for (Map.Entry<String, List<String>> entry : first.entrySet()) {
 				List <String> prodLeft = new ArrayList<>();
-//				if (prodLeft == null) {
-//					// Leere Liste erstmals befuellen
-//					for(String[] gram : grammatik) {
-//						if (entry.getKey() == gram[0]) {
-//							prodLeft.add(gram[1].substring(0, 0));
-//						}
-//					}
-//					entry.setValue(prodLeft);
-//					flag = true;
-//				} else {
-					// Liste updaten
+				System.out.println(entry);
 					for (String fir : entry.getValue()) {
+						//System.out.println(entry.getValue());
 						// Steht ein Terminal oder NonTerminal da?
 						if (fir.toLowerCase() != fir) {
 							flag = true;
 							// Nichtterminal
-							if (first.containsKey(fir)) {
+							if (first.containsKey(fir) && !entry.getKey().equals(fir)) {
 								prodLeft.addAll(first.get(fir));
 							// Terminal	
+							} else {
+								prodLeft.add(fir);
 							}
+						} else {
+							prodLeft.add(fir);
 						}
 					}
+					
 					entry.setValue(prodLeft);
+					System.out.println(entry.getValue());
 //				}
 				
 			}
@@ -92,9 +92,11 @@ public class RDParser implements RDParserGenerator {
 		// Fuer jeden Eintrag eine Klasse Erstellen
 		for (Map.Entry<String, List<String>> entry : first.entrySet()) {
 			fertigesFile.append(String.format("\tprivate Node %c() throws SyntaxErrorException {\n\t\tswitch(input.charAt(counter)) {\n", entry.getKey().toCharArray()[0]));
-			for (String s : entry.getValue()) {
-				fertigesFile.append(String.format("\t\t\tcase '%c':\n\t\t\t\treturn new Node(\"%c\"", s, entry.getKey()));
-				fertigesFile.append(String.format(first.containsKey(entry.getKey()) ? ", %c()" : ", terminal('%c')", entry.getKey()));
+			//System.out.println(first.values());
+			for (int i = 0; i < entry.getValue().size();i++) {
+				
+				fertigesFile.append(String.format("\t\t\tcase '%c':\n\t\t\t\treturn new Node(\"%c\"" ,entry.getValue().get(i).toCharArray()[0], entry.getKey().toCharArray()[0]));
+				fertigesFile.append(String.format(first.containsKey(entry.getKey()) ? ", %c()" : ", terminal('%c')", entry.getKey().toCharArray()[0]));
 				fertigesFile.append(");\n");
 				exceptionMessage.append(first);
 			}
@@ -107,7 +109,7 @@ public class RDParser implements RDParserGenerator {
 		fertigesFile.append(getSyntaxErrorExceptionSourcecode());
 		fertigesFile.append(getNodeSourcecode());
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(className + ".java"), false))) {
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(className + ".class"), false))) {
 			bw.write(fertigesFile.toString());
 		}
 		catch(IOException e) {}
