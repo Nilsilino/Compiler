@@ -19,8 +19,6 @@ public class PraeProcessor implements Preprocessor {
 
 	@Override
 	public Source process(Source unprocess) throws LexicalError {
-		// TODO Auto-generated method stub
-		boolean flag = false;
 		State currentState;
 		String combined = "";
 		String beforBlock = "";
@@ -71,7 +69,6 @@ public class PraeProcessor implements Preprocessor {
 			case '\n':
 				if (currentState == State.START) {
 					combined += character;
-					flag = true;
 					process.append(combined);
 					combined = "";
 					break;
@@ -79,7 +76,6 @@ public class PraeProcessor implements Preprocessor {
 					combined = "";
 					process.append(beforBlock + '\n');
 					beforBlock = "";
-					flag = true;
 					currentState = State.START;
 					break;
 				} else if (currentState == State.SLASH) {
@@ -93,7 +89,6 @@ public class PraeProcessor implements Preprocessor {
 					combined = "";
 					process.append(beforBlock + "\n");
 					beforBlock = "";
-					flag = true;
 					break;
 				}
 	
