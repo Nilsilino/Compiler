@@ -9,27 +9,14 @@ public class RDParserS {
 
 	public Node parse(String input) throws SyntaxErrorException {
 		this.input = input;
-		return S();
+		return =();
 	}
 
 	private Node S() throws SyntaxErrorException {
 		switch(input.charAt(counter)) {
-			default: throw new SyntaxErrorException("One of the following characters expected: [] but was: " + input.charAt(counter));
-		}
-	}
-
-	private Node F() throws SyntaxErrorException {
-		switch(input.charAt(counter)) {
-			default: throw new SyntaxErrorException("One of the following characters expected: [] but was: " + input.charAt(counter));
-] but was: " + input.charAt(counter));
-		}
-	}
-
-	private Node O() throws SyntaxErrorException {
-		switch(input.charAt(counter)) {
-			default: throw new SyntaxErrorException("One of the following characters expected: [] but was: " + input.charAt(counter));
-] but was: " + input.charAt(counter));
-] but was: " + input.charAt(counter));
+			case 'a':
+				return new Node("S", S());
+			default: throw new SyntaxErrorException("One of the following characters expected: [[a]] but was: " + input.charAt(counter));
 		}
 	}
 

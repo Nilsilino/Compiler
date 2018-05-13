@@ -9,7 +9,7 @@ public class RDParserE {
 
 	public Node parse(String input) throws SyntaxErrorException {
 		this.input = input;
-		return =();
+		return E();
 	}
 
 	private Node E() throws SyntaxErrorException {
@@ -30,7 +30,8 @@ public class RDParserE {
 				return new Node("F", F());
 			case '-':
 				return new Node("F", F());
-			default: throw new SyntaxErrorException("One of the following characters expected: [[n, -]] but was: " + input.charAt(counter));
+			default: throw new SyntaxErrorException("One of the following characters expected: [[(, n, -]] but was: " + input.charAt(counter));
+[n, -]] but was: " + input.charAt(counter));
 		}
 	}
 
@@ -40,7 +41,9 @@ public class RDParserE {
 				return new Node("O", O());
 			case '-':
 				return new Node("O", O());
-			default: throw new SyntaxErrorException("One of the following characters expected: [[+, -]] but was: " + input.charAt(counter));
+			default: throw new SyntaxErrorException("One of the following characters expected: [[(, n, -]] but was: " + input.charAt(counter));
+[n, -]] but was: " + input.charAt(counter));
+[+, -]] but was: " + input.charAt(counter));
 		}
 	}
 

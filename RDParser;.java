@@ -1,47 +1,15 @@
 import java.util.*;
 
-public class RDParserE {
+public class RDParser; {
 
 	private String input;
 	private int counter = 0;
 
-	public RDParserE() {};
+	public RDParser;() {};
 
 	public Node parse(String input) throws SyntaxErrorException {
 		this.input = input;
-		return =();
-	}
-
-	private Node E() throws SyntaxErrorException {
-		switch(input.charAt(counter)) {
-			case '(':
-				return new Node("E", E());
-			case 'n':
-				return new Node("E", E());
-			case '-':
-				return new Node("E", E());
-			default: throw new SyntaxErrorException("One of the following characters expected: [[(, n, -]] but was: " + input.charAt(counter));
-		}
-	}
-
-	private Node F() throws SyntaxErrorException {
-		switch(input.charAt(counter)) {
-			case 'n':
-				return new Node("F", F());
-			case '-':
-				return new Node("F", F());
-			default: throw new SyntaxErrorException("One of the following characters expected: [[n, -]] but was: " + input.charAt(counter));
-		}
-	}
-
-	private Node O() throws SyntaxErrorException {
-		switch(input.charAt(counter)) {
-			case '+':
-				return new Node("O", O());
-			case '-':
-				return new Node("O", O());
-			default: throw new SyntaxErrorException("One of the following characters expected: [[+, -]] but was: " + input.charAt(counter));
-		}
+		return ;();
 	}
 
 private Node terminal(char c) throws SyntaxErrorException {
