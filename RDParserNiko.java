@@ -1,22 +1,46 @@
 import java.util.*;
 
-public class RDParserS {
+public class RDParserE {
 
 	private String input;
 	private int counter = 0;
 
-	public RDParserS() {};
+	public RDParserE() {};
 
 	public Node parse(String input) throws SyntaxErrorException {
 		this.input = input;
-		return =();
+		return E();
 	}
 
-	private Node S() throws SyntaxErrorException {
+	private Node E() throws SyntaxErrorException {
 		switch(input.charAt(counter)) {
-			case 'a':
-				return new Node("S", S());
-			default: throw new SyntaxErrorException("One of the following characters expected: [[a]] but was: " + input.charAt(counter));
+			case '(':
+				return new Node("E", terminal('('), E(), O(), E(), terminal(')'));
+			case '-':
+				return new Node("E", F());
+			case 'n':
+				return new Node("E", F());
+			default: throw new SyntaxErrorException("One of the following characters expected: [(-n] but was: " + input.charAt(counter));
+		}
+	}
+
+	private Node F() throws SyntaxErrorException {
+		switch(input.charAt(counter)) {
+			case '-':
+				return new Node("F", terminal('-'), E());
+			case 'n':
+				return new Node("F", terminal('n'));
+			default: throw new SyntaxErrorException("One of the following characters expected: [-n] but was: " + input.charAt(counter));
+		}
+	}
+
+	private Node O() throws SyntaxErrorException {
+		switch(input.charAt(counter)) {
+			case '+':
+				return new Node("O", terminal('+'));
+			case '-':
+				return new Node("O", terminal('-'));
+			default: throw new SyntaxErrorException("One of the following characters expected: [+-] but was: " + input.charAt(counter));
 		}
 	}
 

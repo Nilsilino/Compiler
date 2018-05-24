@@ -1,3 +1,5 @@
+package edu.hm.wimmer.nils.test;
+
 import java.util.*;
 
 public class RDParserE {
