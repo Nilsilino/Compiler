@@ -40,7 +40,7 @@ public class test {
 //				}							
 //			}
 //		}
-//		System.out.println("Läuft....");
+//		System.out.println("Lauft....");
 //		try {
 //			Thread.sleep(1000);
 //		} catch (InterruptedException e) {

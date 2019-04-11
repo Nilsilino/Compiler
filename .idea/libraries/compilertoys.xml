@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="compilertoys">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/compilertoys.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

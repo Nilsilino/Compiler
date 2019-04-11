@@ -142,7 +142,7 @@ public class RDParser implements RDParserGenerator {
 								}							
 							}
 						}
-						System.out.println("Läuft....");
+						System.out.println("Luft....");
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e) {

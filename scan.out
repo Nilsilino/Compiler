@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<tokenstream>
+  <identifier value="a"/>
+  <assign/>
+  <numeral value="42"/>
+  <semicolon/>
+  <print/>
+  <numeral value="1"/>
+  <add/>
+  <identifier value="a"/>
+  <semicolon/>
+</tokenstream>
